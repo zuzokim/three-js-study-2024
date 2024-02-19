@@ -30,10 +30,11 @@ function Page() {
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    // const material2 = new THREE.MeshBasicMaterial({ color: 0x0033ff });
-    // const cube2 = new THREE.Mesh(geometry, material2);
-    // cube2.position.x = 1.5;
-    // scene.add(cube2);
+    const geometry2 = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+    const material2 = new THREE.MeshBasicMaterial({ color: 0x0033ff });
+    const cube2 = new THREE.Mesh(geometry2, material2);
+    cube2.position.x = 1.5;
+    scene.add(cube2);
 
     const axedHelper = new THREE.AxesHelper();
     scene.add(axedHelper);
@@ -68,7 +69,14 @@ function Page() {
       cube.rotation.y = elapsedTime * Math.PI * 2; // rotate360
       cube.position.x = Math.sin(elapsedTime * Math.PI);
       cube.position.y = Math.cos(elapsedTime * Math.PI);
+
+      cube2.rotation.x += 0.005 * deltaTime;
+      cube2.rotation.y = elapsedTime * Math.PI * 2; // rotate360
+      cube2.position.x = Math.sin(elapsedTime * Math.PI * 2);
+      cube2.position.y = Math.cos(elapsedTime * Math.PI * 2);
+
       camera.position.y = Math.cos(elapsedTime);
+      /** look at cube, not cube2 */
       camera.lookAt(cube.position);
       renderer.render(scene, camera);
     }
