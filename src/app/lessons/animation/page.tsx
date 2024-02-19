@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import HomeButton from "../../components/HomeButton";
+import PageTitle from "../../components/PageTitle";
 import styles from "../../page.module.css";
 
 import gsap from "gsap";
@@ -92,6 +93,7 @@ function Page() {
   return (
     <div className={styles.page}>
       <HomeButton />
+      <PageTitle title="animation" />
       <div ref={el}></div>
     </div>
   );

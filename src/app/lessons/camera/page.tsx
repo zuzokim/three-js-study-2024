@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import HomeButton from "../../components/HomeButton";
+import PageTitle from "../../components/PageTitle";
 import styles from "../../page.module.css";
 
 function Page() {
@@ -64,6 +65,7 @@ function Page() {
   return (
     <div className={styles.page}>
       <HomeButton />
+      <PageTitle title="camera" />
       <div ref={el}></div>
     </div>
   );
