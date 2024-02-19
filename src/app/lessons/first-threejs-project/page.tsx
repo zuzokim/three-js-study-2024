@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import HomeButton from "../../components/HomeButton";
+import PageTitle from "../../components/PageTitle";
+import styles from "../../page.module.css";
 
 function Page() {
   const el = useRef<HTMLDivElement>(null);
@@ -9,7 +12,7 @@ function Page() {
     if (!el.current) {
       return;
     }
-    el.current.innerHTML = "HELLO 3";
+    el.current.innerHTML = "";
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -28,9 +31,6 @@ function Page() {
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    const axedHelper = new THREE.AxesHelper();
-    scene.add(axedHelper);
-
     camera.position.z = 5;
     camera.position.y = 1;
     camera.position.x = 1;
@@ -46,7 +46,13 @@ function Page() {
 
     animate();
   }, []);
-  return <div ref={el}></div>;
+  return (
+    <div className={styles.page}>
+      <HomeButton />
+      <PageTitle title="first-threejs-project" />
+      <div ref={el}></div>
+    </div>
+  );
 }
 
 export default Page;
