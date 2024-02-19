@@ -30,6 +30,11 @@ function Page() {
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
+    const material2 = new THREE.MeshBasicMaterial({ color: 0x0033ff });
+    const cube2 = new THREE.Mesh(geometry, material2);
+    cube2.position.x = 1.5;
+    scene.add(cube2);
+
     const axedHelper = new THREE.AxesHelper();
     scene.add(axedHelper);
 
@@ -61,7 +66,9 @@ function Page() {
       /**animate at the same speed regardless of the fps */
       cube.rotation.x += 0.005 * deltaTime;
       cube.rotation.y = elapsedTime * Math.PI * 2; // rotate360
-
+      cube.position.x = Math.sin(elapsedTime * Math.PI);
+      cube.position.y = Math.cos(elapsedTime * Math.PI);
+      camera.position.y = Math.cos(elapsedTime);
       renderer.render(scene, camera);
     }
 
