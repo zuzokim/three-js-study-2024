@@ -26,21 +26,35 @@ function Page() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     el.current.appendChild(renderer.domElement);
 
+    /**add group on the scene */
+    const group = new THREE.Group();
+    /** transform cubes by group  */
+    group.scale.y = 1.8;
+    group.rotation.y = 0.1;
+    scene.add(group);
+
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material1 = new THREE.MeshBasicMaterial({ color: 0x00ffee });
     const cube1 = new THREE.Mesh(geometry, material1);
     cube1.position.x = -1.5;
-    scene.add(cube1);
+
+    /**add cube1 on the group */
+    group.add(cube1);
 
     const material2 = new THREE.MeshBasicMaterial({ color: 0xffeeee });
     const cube2 = new THREE.Mesh(geometry, material2);
     cube2.position.x = 0;
-    scene.add(cube2);
+    /** transform cube2 individually */
+    cube2.scale.y = 0.7;
+    cube2.rotation.y = 0.5;
+    /**add cube2 on the group */
+    group.add(cube2);
 
     const material3 = new THREE.MeshBasicMaterial({ color: 0xee00ff });
     const cube3 = new THREE.Mesh(geometry, material3);
     cube3.position.x = 1.5;
-    scene.add(cube3);
+    /**add cube3 on the group */
+    group.add(cube3);
 
     const axedHelper = new THREE.AxesHelper();
     scene.add(axedHelper);
