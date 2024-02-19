@@ -41,7 +41,7 @@ function Page() {
 
     //previous time
     let time = Date.now();
-    
+    const clock = new THREE.Clock();
 
     function animate() {
       /**call it on the next frame!
@@ -55,9 +55,12 @@ function Page() {
       const deltaTime = currentTime - time;
       time = currentTime;
 
+      //clock second starts from 0 on the first render.
+      const elapsedTime = clock.getElapsedTime();
+
       /**animate at the same speed regardless of the fps */
       cube.rotation.x += 0.005 * deltaTime;
-      cube.rotation.y += 0.03 * deltaTime;
+      cube.rotation.y = elapsedTime * Math.PI * 2; // rotate360
 
       renderer.render(scene, camera);
     }
