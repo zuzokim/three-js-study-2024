@@ -15,15 +15,20 @@ function Page() {
     el.current.innerHTML = "";
 
     const scene = new THREE.Scene();
+
+    const sizes = {
+      WIDTH: window.innerWidth,
+      HEIGHT: window.innerHeight,
+    };
     const camera = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      sizes.WIDTH / sizes.HEIGHT,
       0.1,
       1000
     );
 
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(sizes.WIDTH, sizes.HEIGHT);
     el.current.appendChild(renderer.domElement);
 
     /**add group on the scene */
