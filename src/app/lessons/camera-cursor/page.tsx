@@ -58,7 +58,7 @@ function Page() {
     const axedHelper = new THREE.AxesHelper();
     scene.add(axedHelper);
 
-    camera.position.z = 3;
+    camera.position.z = 2;
     camera.lookAt(cube.position);
 
     const clock = new THREE.Clock();
@@ -68,9 +68,13 @@ function Page() {
 
       const elapsedTime = clock.getElapsedTime();
 
-      cube.rotation.y += 0.005;
-      camera.position.x = cursor.X * 3;
-      camera.position.y = cursor.Y * 3;
+      cube.rotation.x += 0.005;
+      // camera.position.x = cursor.X * 10;
+      // camera.position.y = cursor.Y * 10;
+      /** restrict the direction on cursor move (x , z), Math.PI * 2  = full rotation  */
+      camera.position.x = Math.sin(cursor.X * Math.PI * 2) * 3;
+      camera.position.z = Math.cos(cursor.X * Math.PI * 2) * 3;
+      camera.position.y = cursor.Y * 5;
       // camera.lookAt(new THREE.Vector3()); //0,0,0 cube
       camera.lookAt(cube.position);
 
