@@ -30,6 +30,11 @@ export default function Home() {
         <li>
           <Link href="/lessons/camera-cursor">lessons/camera-cursor</Link>
         </li>
+        <li>
+          <Link href="/lessons/camera-orbit-controls">
+            lessons/camera-orbit-controls
+          </Link>
+        </li>
       </ol>
     </div>
   );
