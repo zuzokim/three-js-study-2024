@@ -27,6 +27,9 @@ export default function Home() {
         <li>
           <Link href="/lessons/camera">lessons/camera</Link>
         </li>
+        <li>
+          <Link href="/lessons/camera-cursor">lessons/camera-cursor</Link>
+        </li>
       </ol>
     </div>
   );
