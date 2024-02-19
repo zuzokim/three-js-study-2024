@@ -67,6 +67,8 @@ function Page() {
     camera.position.z = 5;
     camera.position.y = 1;
     camera.position.x = 1;
+    /**transform the facing direction */
+    camera.lookAt(new THREE.Vector3(-0.5, 0.5, 0));
 
     renderer.render(scene, camera);
   }, []);
