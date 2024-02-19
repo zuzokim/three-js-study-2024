@@ -24,7 +24,15 @@ function Page() {
     //   //far
     //   100
     // );
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    const camera = new THREE.OrthographicCamera(
+      -1 * aspectRatio,
+      1 * aspectRatio,
+      1,
+      -1,
+      0.1,
+      100
+    );
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
