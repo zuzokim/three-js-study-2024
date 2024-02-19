@@ -5,6 +5,8 @@ import * as THREE from "three";
 import HomeButton from "../../components/HomeButton";
 import styles from "../../page.module.css";
 
+import gsap from "gsap";
+
 function Page() {
   const el = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -48,6 +50,10 @@ function Page() {
     //previous time
     let time = Date.now();
     const clock = new THREE.Clock();
+
+    /**even if gasp is used to animate, render still need to be called with requestAnmiationFrame */
+    // gsap.to(cube.position, { duration: 1, delay: 1, x: 2, y: 2 });
+    // gsap.to(cube.position, { duration: 1, delay: 2, x: 0 });
 
     function animate() {
       /**call it on the next frame!
