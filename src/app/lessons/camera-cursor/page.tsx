@@ -20,6 +20,7 @@ function Page() {
     };
 
     el.current?.addEventListener("mousemove", (e) => {
+      //e.clientX / window.innerWidth -> 퍼센트로 바꾸고 기준 축을 0.5해서 조정 (0, 0)을 가운데로
       cursor.X = e.clientX / window.innerWidth - 0.5;
 
       cursor.Y = -(e.clientY / window.innerHeight - 0.5);

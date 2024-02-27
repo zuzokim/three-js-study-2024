@@ -35,6 +35,9 @@ export default function Home() {
             lessons/camera-orbit-controls
           </Link>
         </li>
+        <li>
+          <Link href="/lessons/resize">lessons/resize</Link>
+        </li>
       </ol>
     </div>
   );
