@@ -42,7 +42,14 @@ export default function Home() {
           <Link href="/lessons/vector-class">lessons/vector-class</Link>
         </li>
         <li>
-          <Link href="/lessons/vector-class-basis">lessons/vector-class-basis</Link>
+          <Link href="/lessons/vector-class-basis">
+            lessons/vector-class-basis
+          </Link>
+        </li>
+        <li>
+          <Link href="/lessons/vector-class-basis-second">
+            lessons/vector-class-basis-second
+          </Link>
         </li>
       </ol>
     </div>
