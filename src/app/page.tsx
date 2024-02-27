@@ -41,6 +41,9 @@ export default function Home() {
         <li>
           <Link href="/lessons/vector-class">lessons/vector-class</Link>
         </li>
+        <li>
+          <Link href="/lessons/vector-class-basis">lessons/vector-class-basis</Link>
+        </li>
       </ol>
     </div>
   );
