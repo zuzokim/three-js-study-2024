@@ -51,6 +51,16 @@ export default function Home() {
             lessons/vector-class-basis-second
           </Link>
         </li>
+        <li>
+          <Link href="/lessons/vector-class-basis-applyMatrix">
+            lessons/vector-class-basis-applyMatrix
+          </Link>
+        </li>
+        <li>
+          <Link href="/lessons/vector-class-basis-rotate">
+            lessons/vector-class-basis-rotate
+          </Link>
+        </li>
       </ol>
     </div>
   );
