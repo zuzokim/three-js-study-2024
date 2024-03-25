@@ -16,15 +16,43 @@ function Page() {
     }
     el.current.innerHTML = "";
 
-    const image = new Image();
-    const texture = new THREE.Texture(image);
-    texture.colorSpace = THREE.SRGBColorSpace;
+    //Solution1.
+    // const image = new Image();
+    // const texture = new THREE.Texture(image);
+    // texture.colorSpace = THREE.SRGBColorSpace;
 
-    image.onload = () => {
-      texture.needsUpdate = true;
+    // image.onload = () => {
+    //   texture.needsUpdate = true;
+    // };
+
+    // image.src = "../textures/door/color.jpg";
+
+    //Solution2.
+    const loadingManager = new THREE.LoadingManager();
+
+    loadingManager.onStart = () => {
+      console.log("onLoaded");
     };
-
-    image.src = "../textures/door/color.jpg";
+    loadingManager.onProgress = () => {
+      console.log("onProgress");
+    };
+    loadingManager.onError = () => {
+      console.log("onError");
+    };
+    const textureLoader = new THREE.TextureLoader(loadingManager);
+    const texture = textureLoader.load(
+      "../textures/door/color.jpg"
+      // () => {
+      //   console.log("textureLoader: loading finished");
+      // },
+      // () => {
+      //   console.log("textureLoader: loading progressing");
+      // },
+      // () => {
+      //   console.log("textureLoader: loading error");
+      // }
+    );
+    texture.colorSpace = THREE.SRGBColorSpace;
 
     const cursor = {
       X: 0,
