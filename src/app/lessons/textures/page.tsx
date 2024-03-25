@@ -41,7 +41,7 @@ function Page() {
     };
     const textureLoader = new THREE.TextureLoader(loadingManager);
     const texture = textureLoader.load(
-      "../textures/door/color.jpg"
+      "../textures/checkerboard-1024x1024.png"
       // () => {
       //   console.log("textureLoader: loading finished");
       // },
@@ -53,6 +53,24 @@ function Page() {
       // }
     );
     texture.colorSpace = THREE.SRGBColorSpace;
+
+    // texture.repeat.x = 2;
+    // texture.repeat.y = 2;
+    // texture.wrapS = THREE.RepeatWrapping;
+    // texture.wrapT = THREE.RepeatWrapping;
+
+    // texture.offset.x = 0.5;
+    // texture.offset.y = 0.5;
+
+    //회전 기준점을 중심으로 이동
+    // texture.center.x = 0.5;
+    // texture.center.y = 0.5;
+
+    // texture.rotation = Math.PI / 4;
+
+    texture.generateMipmaps = false; //deactivate it when using NearestFilter
+    // texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter
 
     const cursor = {
       X: 0,
@@ -85,6 +103,8 @@ function Page() {
     el.current.appendChild(renderer.domElement);
 
     const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
+    // console.log(geometry.attributes.uv)
+
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
