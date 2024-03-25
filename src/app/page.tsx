@@ -14,6 +14,7 @@ export default function Home() {
     "vector-class-basis-second",
     "vector-class-basis-applyMatrix",
     "vector-class-basis-rotate",
+    "textures",
   ];
 
   return (
