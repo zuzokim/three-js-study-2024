@@ -3,7 +3,7 @@ import Link from "next/link";
 const HomeButton = () => {
   return (
     <Link href="/">
-      <button> HOME </button>
+      <button> ⬅️ HOME </button>
     </Link>
   );
 };

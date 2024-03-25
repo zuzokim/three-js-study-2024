@@ -108,6 +108,12 @@ a {
 
 * {
   box-sizing: border-box;
+
+}
+
+html,
+body {
+  overflow: hidden;
 }
 
 a:visited {

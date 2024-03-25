@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import HomeButton from "../../components/HomeButton";
+import PageTitle from "../../components/PageTitle";
+import styles from "../../page.module.css";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
@@ -81,7 +84,12 @@ function Page() {
     };
   });
 
-  return <canvas style={{ display: "block" }} ref={el}></canvas>;
+  return (
+    <div className={styles.page}>
+      <HomeButton />
+      <PageTitle title="vector-class-basis-rotate" />
+      <canvas style={{ display: "block" }} ref={el}></canvas>
+    </div>
+  );
 }
-
 export default Page;

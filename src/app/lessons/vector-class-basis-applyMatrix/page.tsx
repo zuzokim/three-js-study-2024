@@ -1,8 +1,11 @@
 "use client";
 
+import HomeButton from "@/app/components/HomeButton";
+import PageTitle from "@/app/components/PageTitle";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import styles from "../../page.module.css";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
@@ -116,7 +119,13 @@ function Page() {
     };
   });
 
-  return <canvas style={{ display: "block" }} ref={el}></canvas>;
+  return (
+    <div className={styles.page}>
+      <HomeButton />
+      <PageTitle title="vector-class-applyMatrix" />
+      <canvas style={{ display: "block" }} ref={el}></canvas>
+    </div>
+  );
 }
 
 export default Page;

@@ -1,12 +1,20 @@
 .page {
-display: flex;
-flex-direction: column;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+  align-items: center;
+  padding-top: 16px;
 }
 
 .title {
   font-size: 1.4rem;
   line-height: 0.6rem;
+  width: 100%;
+  text-align: center;
 }
 
 /* Enable hover only on non-touch devices */
@@ -29,12 +37,10 @@ gap: 8px;
 
 /* Mobile */
 @media (max-width: 700px) {
-
 }
 
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
-
 }
 
 @media (prefers-color-scheme: dark) {

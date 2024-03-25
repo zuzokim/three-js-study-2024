@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import HomeButton from "../../components/HomeButton";
@@ -9,12 +9,6 @@ import styles from "../../page.module.css";
 
 function Page() {
   const el = useRef<HTMLDivElement>(null);
-
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
-
-  console.log("here");
-
   useEffect(() => {
     if (!el.current) {
       return;
@@ -26,51 +20,10 @@ function Page() {
       Y: 0,
     };
 
-    // const sizes = {
-    //   width: window.innerWidth,
-    //   height: window.innerHeight,
-    // };
-
-    window.addEventListener("resize", () => {
-      console.log("resize");
-      // Update sizes
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-
-      // Update camera
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-
-      // Update renderer
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    });
-
-    window.addEventListener("dblclick", () => {
-      const fullscreenElement = document.fullscreenElement;
-      // || document.webkitFullscreenElement;
-
-      if (!fullscreenElement) {
-        if (el.current?.requestFullscreen) {
-          el.current?.requestFullscreen();
-        }
-        // else if (el.current?.webkitRequestFullscreen) {
-        //   el.current?.webkitRequestFullscreen();
-        // }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-        // else if (document.webkitExitFullscreen) {
-        // document.webkitExitFullscreen();
-        // }
-      }
-    });
-
     el.current?.addEventListener("mousemove", (e) => {
-      cursor.X = e.clientX / width - 0.5;
+      cursor.X = e.clientX / window.innerWidth - 0.5;
 
-      cursor.Y = -(e.clientY / height - 0.5);
+      cursor.Y = -(e.clientY / window.innerHeight - 0.5);
     });
 
     const scene = new THREE.Scene();
@@ -78,7 +31,7 @@ function Page() {
       //field of view
       75,
       //aspect ratio
-      width / height,
+      window.innerWidth / window.innerHeight,
       //near
       0.1,
       //far
@@ -89,8 +42,8 @@ function Page() {
     controls.enableDamping = true;
 
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    el.current.appendChild(renderer.domElement);
 
     const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
     const material = new THREE.MeshBasicMaterial({ color: 0xff99ee });
@@ -117,12 +70,11 @@ function Page() {
     }
 
     animate();
-  }, [height, width]);
-
+  }, []);
   return (
     <div className={styles.page}>
       <HomeButton />
-      <PageTitle title="resize" />
+      <PageTitle title="resizing" />
       <div ref={el}></div>
     </div>
   );

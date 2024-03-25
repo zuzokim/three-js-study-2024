@@ -1,6 +1,21 @@
 import Link from "next/link";
 
 export default function Home() {
+  const lessonList = [
+    "first-threejs-project",
+    "transform",
+    "animation",
+    "camera",
+    "camera-cursor",
+    "camera-orbit-controls",
+    "resizing",
+    "vector-class",
+    "vector-class-basis",
+    "vector-class-basis-second",
+    "vector-class-basis-applyMatrix",
+    "vector-class-basis-rotate",
+  ];
+
   return (
     <div>
       <ol>
@@ -13,54 +28,13 @@ export default function Home() {
             study-log
           </Link>
         </li>
-        <li>
-          <Link href="/lessons/first-threejs-project">
-            lessons/first-threejs-project
-          </Link>
-        </li>
-        <li>
-          <Link href="/lessons/transform">lessons/transform</Link>
-        </li>
-        <li>
-          <Link href="/lessons/animation">lessons/animation</Link>
-        </li>
-        <li>
-          <Link href="/lessons/camera">lessons/camera</Link>
-        </li>
-        <li>
-          <Link href="/lessons/camera-cursor">lessons/camera-cursor</Link>
-        </li>
-        <li>
-          <Link href="/lessons/camera-orbit-controls">
-            lessons/camera-orbit-controls
-          </Link>
-        </li>
-        <li>
-          <Link href="/lessons/resize">lessons/resize</Link>
-        </li>
-        <li>
-          <Link href="/lessons/vector-class">lessons/vector-class</Link>
-        </li>
-        <li>
-          <Link href="/lessons/vector-class-basis">
-            lessons/vector-class-basis
-          </Link>
-        </li>
-        <li>
-          <Link href="/lessons/vector-class-basis-second">
-            lessons/vector-class-basis-second
-          </Link>
-        </li>
-        <li>
-          <Link href="/lessons/vector-class-basis-applyMatrix">
-            lessons/vector-class-basis-applyMatrix
-          </Link>
-        </li>
-        <li>
-          <Link href="/lessons/vector-class-basis-rotate">
-            lessons/vector-class-basis-rotate
-          </Link>
-        </li>
+        {lessonList.map((title, i) => {
+          return (
+            <li key={i}>
+              <Link href={`/lessons/${title}`}>lessons/{title}</Link>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
