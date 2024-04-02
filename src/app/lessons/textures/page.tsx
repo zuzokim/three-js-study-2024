@@ -40,8 +40,11 @@ function Page() {
       console.log("onError");
     };
     const textureLoader = new THREE.TextureLoader(loadingManager);
+
+    const src = new URL("./textures/checkerboard-8x8.png", import.meta.url);
+
     const texture = textureLoader.load(
-      "../textures/checkerboard-1024x1024.png"
+      src.pathname
       // () => {
       //   console.log("textureLoader: loading finished");
       // },
@@ -53,6 +56,24 @@ function Page() {
       // }
     );
     texture.colorSpace = THREE.SRGBColorSpace;
+
+    const src2 = new URL(
+      "./textures/checkerboard-1024x1024.png",
+      import.meta.url
+    );
+
+    const texture2 = textureLoader.load(
+      src2.pathname
+      // () => {
+      //   console.log("textureLoader: loading finished");
+      // },
+      // () => {
+      //   console.log("textureLoader: loading progressing");
+      // },
+      // () => {
+      //   console.log("textureLoader: loading error");
+      // }
+    );
 
     // texture.repeat.x = 2;
     // texture.repeat.y = 2;
@@ -70,7 +91,7 @@ function Page() {
 
     texture.generateMipmaps = false; //deactivate it when using NearestFilter
     // texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter
+    texture.magFilter = THREE.NearestFilter;
 
     const cursor = {
       X: 0,
@@ -107,18 +128,25 @@ function Page() {
 
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const cube = new THREE.Mesh(geometry, material);
+
+    const material2 = new THREE.MeshBasicMaterial({ map: texture2 });
+    const cube2 = new THREE.Mesh(geometry, material);
+    cube.position.y = 1.5;
     scene.add(cube);
+    // scene.add(cube2);
 
     const axedHelper = new THREE.AxesHelper();
     scene.add(axedHelper);
 
     camera.position.z = 3;
     camera.lookAt(cube.position);
+    camera.lookAt(cube2.position);
 
     function animate() {
       requestAnimationFrame(animate);
 
       cube.rotation.x += 0.0005;
+      cube2.rotation.x += 0.0005;
 
       /**update controls for smooth damping  */
       controls.update();
