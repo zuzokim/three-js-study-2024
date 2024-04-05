@@ -16,6 +16,7 @@ export default function Home() {
     "vector-class-basis-rotate",
     "textures",
     "uv-textures",
+    "textures-options",
   ];
 
   return (
