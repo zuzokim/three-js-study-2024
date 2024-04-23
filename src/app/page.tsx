@@ -18,6 +18,7 @@ export default function Home() {
     "uv-textures",
     "textures-options",
     "material",
+    "3d-text",
   ];
 
   return (
