@@ -60,20 +60,42 @@ function Page() {
           bevelSegments: 5,
           depth: 1,
         });
-        textGeometry.computeBoundingBox();
 
-        textGeometry.translate(
-          -textGeometry!.boundingBox!.max.x * 0.5,
-          -textGeometry!.boundingBox!.max.y * 0.5,
-          -textGeometry!.boundingBox!.max.z * 0.5
+        textGeometry.center();
+        // textGeometry.translate(
+        //   -textGeometry!.boundingBox!.max.x * 0.5,
+        //   -textGeometry!.boundingBox!.max.y * 0.5,
+        //   -textGeometry!.boundingBox!.max.z * 0.5
+        // );
+        // const textMaterial = new THREE.MeshBasicMaterial({
+        //   wireframe: true,
+        // });
+        const textureLoader = new THREE.TextureLoader();
+
+        const matcapTexture = textureLoader.load(
+          new URL("./textures/matcaps/pink.png", import.meta.url).href
         );
-        // console.log(textGeometry.boundingBox, "boundingBox");
-        // const textMaterial = new THREE.MeshBasicMaterial();
-        const textMaterial = new THREE.MeshBasicMaterial({
-          wireframe: true,
+        matcapTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const textMaterial = new THREE.MeshMatcapMaterial({
+          matcap: matcapTexture,
         });
 
         const text = new THREE.Mesh(textGeometry, textMaterial);
+
+        const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+        const donutMaterial = new THREE.MeshMatcapMaterial({
+          matcap: matcapTexture,
+        });
+        for (let i = 0; i < 100; i++) {
+          const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+          donut.position.x = (Math.random() - 0.5) * 10;
+          donut.position.y = (Math.random() - 0.5) * 10;
+          donut.position.z = (Math.random() - 0.5) * 10;
+          donut.rotation.x = Math.random() * Math.PI;
+
+          scene.add(donut);
+        }
 
         scene.add(text);
       }
