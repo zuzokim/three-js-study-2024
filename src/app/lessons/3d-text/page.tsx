@@ -55,14 +55,26 @@ function Page() {
           curveSegments: 12,
           bevelEnabled: true,
           bevelThickness: 0.001,
-          bevelSize: 0.01,
+          bevelSize: 0.03,
           bevelOffset: 0,
           bevelSegments: 5,
           depth: 1,
         });
-        const textMaterial = new THREE.MeshBasicMaterial();
+        textGeometry.computeBoundingBox();
+
+        textGeometry.translate(
+          -textGeometry!.boundingBox!.max.x * 0.5,
+          -textGeometry!.boundingBox!.max.y * 0.5,
+          -textGeometry!.boundingBox!.max.z * 0.5
+        );
+        // console.log(textGeometry.boundingBox, "boundingBox");
+        // const textMaterial = new THREE.MeshBasicMaterial();
+        const textMaterial = new THREE.MeshBasicMaterial({
+          wireframe: true,
+        });
+
         const text = new THREE.Mesh(textGeometry, textMaterial);
-        text.position.x = -3;
+
         scene.add(text);
       }
     );
