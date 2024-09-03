@@ -34,14 +34,20 @@ function Page() {
     /**add group on the scene */
     const group = new THREE.Group();
     /** transform cubes by group  */
-    group.scale.y = 1.8;
-    group.rotation.y = 0.1;
-    scene.add(group);
+    group.scale.y = 1.4;
+    group.rotation.y = 0.5;
+
 
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material1 = new THREE.MeshBasicMaterial({ color: 0x00ffee });
     const cube1 = new THREE.Mesh(geometry, material1);
     cube1.position.x = -1.5;
+
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+    cube1.applyQuaternion(quaternion);
+
+    scene.add(group);
 
     /**add cube1 on the group */
     group.add(cube1);
