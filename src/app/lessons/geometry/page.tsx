@@ -65,7 +65,7 @@ function Page() {
   return (
     <div className={styles.page}>
       <HomeButton />
-      <PageTitle title="camera" />
+      <PageTitle title="geometry" />
       <div ref={el}></div>
     </div>
   );

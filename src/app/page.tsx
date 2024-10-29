@@ -19,6 +19,8 @@ export default function Home() {
     "textures-options",
     "material",
     "3d-text",
+    "geometry",
+    "light",
   ];
 
   return (

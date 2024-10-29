@@ -86,7 +86,7 @@ function Page() {
       doorColorTexture.colorSpace = THREE.SRGBColorSpace;
       matcapTexture.colorSpace = THREE.SRGBColorSpace;
 
-      const material = new THREE.MeshPhysicalMaterial();
+      // const material = new THREE.MeshPhysicalMaterial();
 
       // material.map = doorColorTexture;
       // material.wireframe = false;
@@ -129,31 +129,34 @@ function Page() {
       // gradientTexture.generateMipmaps = false;
       // material.gradientMap = gradientTexture;
 
-      // const material = new THREE.MeshStandardMaterial();
-      // material.metalness = 0.7;
+      const material = new THREE.MeshPhysicalMaterial();
+      material.metalness = 0.5;
       // material.roughness = 0.2;
-      // const gui = new GUI();
+      const gui = new GUI();
 
-      // gui.add(material, "metalness").min(0).max(1).step(0.0001);
-      // gui.add(material, "roughness").min(0).max(1).step(0.0001);
+      gui.add(material, "metalness").min(0).max(1).step(0.0001);
+      gui.add(material, "roughness").min(0).max(1).step(0.0001);
       // material.roughness = 1;
-      // material.map = doorColorTexture;
-      // material.aoMap = doorAmbientOcclusionTexture;
-      // material.aoMapIntensity = 1;
-      // material.displacementMap = doorHeightTexture;
-      // material.displacementScale = 0.01;
+      material.map = doorColorTexture;
+      material.aoMap = doorAmbientOcclusionTexture;
+      material.aoMapIntensity = 1;
+      material.displacementMap = doorHeightTexture;
+      material.displacementScale = 0.05;
       // material.metalnessMap = doorMetalnessTexture;
       // material.roughnessMap = doorRoughnessTexture;
       // material.normalMap = doorNormalTexture;
       // material.normalScale.set(0.5, 0.5);
-      // material.transparent = true;
-      // material.alphaMap = doorAlphaTexture;
 
-      const gui = new GUI();
+      gui.add(material.normalScale, 'x').min(0).max(1).step(0.001).name('normalScaleX');
+      gui.add(material.normalScale, 'y').min(0).max(1).step(0.001).name('normalScaleY');
+      material.transparent = true;
+      material.alphaMap = doorAlphaTexture;
+
+      // const gui = new GUI();
 
       // const material = new THREE.MeshPhysicalMaterial();
-      material.metalness = 0;
-      material.roughness = 0;
+      // material.metalness = 0;
+      // material.roughness = 0;
       // material.map = doorColorTexture;
       // material.aoMap = doorAmbientOcclusionTexture;
       // material.aoMapIntensity = 1;
@@ -172,27 +175,27 @@ function Page() {
       // clearcoat
       // material.clearcoat = 1;
       // material.clearcoatRoughness = 0;
-      // gui.add(material, "clearcoat").min(0).max(1).step(0.0001);
-      // gui.add(material, "clearcoatRoughness").min(0).max(1).step(0.0001);
+      gui.add(material, "clearcoat").min(0).max(1).step(0.0001);
+      gui.add(material, "clearcoatRoughness").min(0).max(1).step(0.0001);
 
       // Sheen
       // material.sheen = 1;
       // material.sheenRoughness = 0.25;
       // material.sheenColor.set(1, 1, 1);
 
-      // gui.add(material, "sheen").min(0).max(1).step(0.0001);
-      // gui.add(material, "sheenRoughness").min(0).max(1).step(0.0001);
-      // gui.addColor(material, "sheenColor");
+      gui.add(material, "sheen").min(0).max(1).step(0.0001);
+      gui.add(material, "sheenRoughness").min(0).max(1).step(0.0001);
+      gui.addColor(material, "sheenColor");
 
       // Iridescent
       // material.iridescence = 1;
       // material.iridescenceIOR = 1;
       // material.iridescenceThicknessRange = [100, 800];
 
-      // gui.add(material, "iridescence").min(0).max(1).step(0.0001);
-      // gui.add(material, "iridescenceIOR").min(0).max(1).step(0.0001);
-      // gui.add(material.iridescenceThicknessRange, "0", 0, 1000);
-      // gui.add(material.iridescenceThicknessRange, "1", 0, 1000);
+      gui.add(material, "iridescence").min(0).max(1).step(0.0001);
+      gui.add(material, "iridescenceIOR").min(0).max(1).step(0.0001);
+      gui.add(material.iridescenceThicknessRange, "0", 0, 1000);
+      gui.add(material.iridescenceThicknessRange, "1", 0, 1000);
 
       // Transmission
       material.transmission = 1;
@@ -210,12 +213,15 @@ function Page() {
       sphere.position.x = -1.5;
 
       // plane
-      const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+      const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(1, 1, 100, 16),
+        material
+      );
 
       // torus
 
       const torus = new THREE.Mesh(
-        new THREE.TorusGeometry(0.3, 0.2, 16, 32),
+        new THREE.TorusGeometry(0.3, 0.2, 16, 100),
         material
       );
       torus.position.x = 1.5;
