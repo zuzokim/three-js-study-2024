@@ -21,6 +21,7 @@ export default function Home() {
     "3d-text",
     "geometry",
     "light",
+    "shadow"
   ];
 
   return (
