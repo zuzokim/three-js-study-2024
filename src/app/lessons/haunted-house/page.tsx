@@ -9,8 +9,6 @@ import PageTitle from "@/app/components/PageTitle";
 import { Timer } from "three/addons/misc/Timer.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { text } from "stream/consumers";
-import { loadTexture } from "@/app/utils/textureLoader";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
