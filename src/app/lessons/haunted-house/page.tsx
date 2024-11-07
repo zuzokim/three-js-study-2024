@@ -7,6 +7,7 @@ import styles from "../../page.module.css";
 import HomeButton from "@/app/components/HomeButton";
 import PageTitle from "@/app/components/PageTitle";
 import { Timer } from "three/addons/misc/Timer.js";
+import { Sky } from "three/examples/jsm/objects/Sky.js";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
@@ -32,6 +33,34 @@ function Page() {
       // );
       // sphere.position.y = 1;
 
+      const textureLoader = new THREE.TextureLoader();
+
+      const floorTexture = new URL(
+        "./textures/floor/alpha.jpg",
+        import.meta.url
+      );
+
+      const floorAlphaTexture = textureLoader.load(floorTexture.pathname);
+
+      const floorTexture2 = new URL(
+        "./textures/floor/snow_02_diff_1k.jpg",
+        import.meta.url
+      );
+
+      const floorColorTexture = textureLoader.load(floorTexture2.pathname);
+      floorColorTexture.repeat.set(8, 8);
+      floorColorTexture.wrapS = THREE.RepeatWrapping;
+      floorColorTexture.wrapT = THREE.RepeatWrapping;
+
+      const floorTexture3 = new URL(
+        "./textures/floor/snow_02_disp_1k.png",
+        import.meta.url
+      );
+
+      const floorDisplacementTexture = textureLoader.load(
+        floorTexture3.pathname
+      );
+
       // House container
       const house = new THREE.Group();
       scene.add(house);
@@ -39,7 +68,7 @@ function Page() {
       // Walls
       const walls = new THREE.Mesh(
         new THREE.BoxGeometry(4, 2.5, 4),
-        new THREE.MeshStandardMaterial()
+        new THREE.MeshStandardMaterial({ color: "white" })
       );
       walls.position.y = 1.25; //2.5의 절반
       house.add(walls);
@@ -47,7 +76,12 @@ function Page() {
       // Roof
       const roof = new THREE.Mesh(
         new THREE.ConeGeometry(3.5, 1.5, 4),
-        new THREE.MeshStandardMaterial()
+        new THREE.MeshStandardMaterial({
+          alphaMap: floorAlphaTexture,
+          // transparent: true,
+          map: floorColorTexture,
+          // displacementMap: floorDisplacementTexture,
+        })
       );
       roof.position.y = 2.5 + 0.75; //walls의 y위치 + walls의 절반
       roof.rotation.y = Math.PI * 0.25;
@@ -62,9 +96,19 @@ function Page() {
       door.position.z = 2 + 0.001; //z-fighting 방지
       house.add(door);
 
+      // Door light
+      const doorLight = new THREE.PointLight("#9bb5f3", 3);
+      doorLight.position.set(0, 2.2, 2.5);
+      house.add(doorLight);
+
+      const ghost1 = new THREE.PointLight("#08566f", 6);
+      const ghost2 = new THREE.PointLight("#2f00ff", 6);
+      const ghost3 = new THREE.PointLight("#000000", 6);
+      scene.add(ghost1, ghost2, ghost3);
+
       // Bushes
       const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
-      const bushMaterial = new THREE.MeshStandardMaterial({ color: "green" });
+      const bushMaterial = new THREE.MeshStandardMaterial({ color: "#085937" });
 
       const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
       bush1.scale.set(0.5, 0.5, 0.5);
@@ -83,6 +127,25 @@ function Page() {
       bush4.position.set(-1, 0.05, 2.6);
 
       house.add(bush1, bush2, bush3, bush4);
+
+      //Snowman
+
+      const snowmanGroup = new THREE.Group();
+      scene.add(snowmanGroup);
+      const snowmanGeometry = new THREE.SphereGeometry(1, 16, 16);
+      const snowmanMaterial = new THREE.MeshStandardMaterial({
+        color: "white",
+      });
+
+      const snowman = new THREE.Mesh(snowmanGeometry, snowmanMaterial);
+      snowman.scale.set(0.7, 0.7, 0.7);
+      snowman.position.set(2.8, 0.3, 4.5);
+
+      const snowmanhead = new THREE.Mesh(snowmanGeometry, snowmanMaterial);
+      snowmanhead.scale.set(0.4, 0.4, 0.4);
+      snowmanhead.position.set(2.8, 1.2, 4.5);
+
+      snowmanGroup.add(snowman, snowmanhead);
 
       // Graves
       const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
@@ -113,32 +176,6 @@ function Page() {
         graves.add(grave);
       }
 
-      const textureLoader = new THREE.TextureLoader();
-
-      const floorTexture = new URL(
-        "./textures/floor/alpha.jpg",
-        import.meta.url
-      );
-
-      const floorAlphaTexture = textureLoader.load(floorTexture.pathname);
-
-      const floorTexture2 = new URL(
-        "./textures/floor/rocky_terrain_diff_1k.jpg",
-        import.meta.url
-      );
-
-      const floorColorTexture = textureLoader.load(floorTexture2.pathname);
-
-      // const floorARMTexture = textureLoader.load(
-      //   "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.jpg"
-      // );
-      // const floorNormalTexture = textureLoader.load(
-      //   "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.jpg"
-      // );
-      // const floorDisplacementTexture = textureLoader.load(
-      //   "./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.jpg"
-      // );
-
       // Floor
       const floor = new THREE.Mesh(
         new THREE.PlaneGeometry(20, 20),
@@ -146,6 +183,9 @@ function Page() {
           alphaMap: floorAlphaTexture,
           transparent: true,
           map: floorColorTexture,
+          displacementMap: floorDisplacementTexture,
+          displacementScale: 0.8,
+          displacementBias: -0.5,
         })
       );
 
@@ -154,6 +194,19 @@ function Page() {
 
       // Add Mesh to Scene
       scene.add(floor);
+
+      /**
+       * Sky
+       */
+      const sky = new Sky();
+      sky.scale.set(100, 100, 100);
+      scene.add(sky);
+
+      sky.material.uniforms["turbidity"].value = 10;
+      sky.material.uniforms["rayleigh"].value = 5;
+      sky.material.uniforms["mieCoefficient"].value = 0.1;
+      sky.material.uniforms["mieDirectionalG"].value = 0.95;
+      sky.material.uniforms["sunPosition"].value.set(0.3, -0.05, -0.95);
 
       /**
        * Lights
@@ -166,6 +219,17 @@ function Page() {
       const directionalLight = new THREE.DirectionalLight("#ffffff", 1.5);
       directionalLight.position.set(3, 2, -8);
       scene.add(directionalLight);
+
+      // Cast and receive
+      directionalLight.castShadow = true;
+      ghost1.castShadow = true;
+      ghost2.castShadow = true;
+      ghost3.castShadow = true;
+
+      walls.castShadow = true;
+      walls.receiveShadow = true;
+      roof.castShadow = true;
+      floor.receiveShadow = true;
 
       /**
        * Sizes
@@ -214,11 +278,39 @@ function Page() {
         timer.update();
         const elapsedTime = timer.getElapsed();
 
+        //jumping snowman
+        snowmanGroup.position.y = Math.sin(elapsedTime * 7) * 0.1 + 0.3;
+
+        // Ghosts
+        const ghost1Angle = elapsedTime * 0.5;
+        ghost1.position.x = Math.cos(ghost1Angle) * 4;
+        ghost1.position.z = Math.sin(ghost1Angle) * 4;
+        ghost1.position.y =
+          Math.sin(ghost1Angle) *
+          Math.sin(ghost1Angle * 2.34) *
+          Math.sin(ghost1Angle * 3.45);
+
+        const ghost2Angle = -elapsedTime * 0.38;
+        ghost2.position.x = Math.cos(ghost2Angle) * 6;
+        ghost2.position.z = Math.sin(ghost2Angle) * 6;
+        ghost2.position.y =
+          Math.sin(ghost2Angle) *
+          Math.sin(ghost2Angle * 2.34) *
+          Math.sin(ghost2Angle * 3.45);
+
+        const ghost3Angle = elapsedTime;
+        ghost3.position.z = Math.sin(ghost3Angle) * 4;
+        ghost3.position.y = ghost3.position.x = Math.cos(ghost3Angle);
+        Math.sin(ghost2Angle) *
+          Math.sin(ghost2Angle * 2.34) *
+          Math.sin(ghost2Angle * 3.45);
+
         // Update controls
         controls.update();
 
         // Render
         renderer.render(scene, camera);
+        renderer.shadowMap.enabled = true;
 
         // Call tick again on the next frame
         window.requestAnimationFrame(tick);
