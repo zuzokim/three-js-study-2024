@@ -68,7 +68,7 @@ function Page() {
       // Walls
       const walls = new THREE.Mesh(
         new THREE.BoxGeometry(4, 2.5, 4),
-        new THREE.MeshStandardMaterial({ color: "white" })
+        new THREE.MeshStandardMaterial({  color: "#072d2d",})
       );
       walls.position.y = 1.25; //2.5의 절반
       house.add(walls);
@@ -77,10 +77,7 @@ function Page() {
       const roof = new THREE.Mesh(
         new THREE.ConeGeometry(3.5, 1.5, 4),
         new THREE.MeshStandardMaterial({
-          alphaMap: floorAlphaTexture,
-          // transparent: true,
-          map: floorColorTexture,
-          // displacementMap: floorDisplacementTexture,
+          color: "red",
         })
       );
       roof.position.y = 2.5 + 0.75; //walls의 y위치 + walls의 절반
@@ -282,7 +279,7 @@ function Page() {
         snowmanGroup.position.y = Math.sin(elapsedTime * 7) * 0.1 + 0.3;
 
         // Ghosts
-        const ghost1Angle = elapsedTime * 0.5;
+        const ghost1Angle = elapsedTime * 5;
         ghost1.position.x = Math.cos(ghost1Angle) * 4;
         ghost1.position.z = Math.sin(ghost1Angle) * 4;
         ghost1.position.y =
@@ -290,7 +287,7 @@ function Page() {
           Math.sin(ghost1Angle * 2.34) *
           Math.sin(ghost1Angle * 3.45);
 
-        const ghost2Angle = -elapsedTime * 0.38;
+        const ghost2Angle = -elapsedTime * 3;
         ghost2.position.x = Math.cos(ghost2Angle) * 6;
         ghost2.position.z = Math.sin(ghost2Angle) * 6;
         ghost2.position.y =
@@ -298,7 +295,7 @@ function Page() {
           Math.sin(ghost2Angle * 2.34) *
           Math.sin(ghost2Angle * 3.45);
 
-        const ghost3Angle = elapsedTime;
+        const ghost3Angle = elapsedTime * 3;
         ghost3.position.z = Math.sin(ghost3Angle) * 4;
         ghost3.position.y = ghost3.position.x = Math.cos(ghost3Angle);
         Math.sin(ghost2Angle) *
