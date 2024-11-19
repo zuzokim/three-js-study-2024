@@ -196,7 +196,7 @@ function Page() {
     <div className={styles.page}>
       <HomeButton />
       <PageTitle title="light" />
-      <canvas style={{ display: "block" }} ref={el}></canvas>;
+      <canvas style={{ display: "block" }} ref={el}></canvas>
     </div>
   );
 }

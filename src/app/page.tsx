@@ -23,6 +23,7 @@ export default function Home() {
     "light",
     "shadow",
     "haunted-house",
+    "galaxy-generator",
   ];
 
   return (
