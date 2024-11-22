@@ -59,8 +59,6 @@ function Page() {
         for (let i = 0; i < parameters.count; i++) {
           const i3 = i * 3;
 
-          const radius = Math.random() * parameters.radius;
-
           const branchAngle =
             //012
             ((i % parameters.branches) /
@@ -73,13 +71,15 @@ function Page() {
           const degree90 = Math.PI / 2;
           const degree45 = Math.PI / 4;
           //각도
-          let radian = Math.random() * Math.PI * 2;
+          // let radian = Math.random() * Math.PI * 2;
 
-          const x = Math.cos(radian) * parameters.radius * Math.random(); // 넓이 조정하려면 radius만큼
-          const y = Math.sin(radian) * parameters.radius * Math.random();
+          const radius = Math.random() * parameters.radius;
+
+          const x = Math.cos(branchAngle + radius) * radius; //* Math.random(); // 넓이 조정하려면 radius만큼
+          const y = Math.sin(branchAngle + radius) * radius; //* Math.random();
 
           positions[i3] = x;
-          positions[i3 + 1] = y;
+          positions[i3 + 1] = 0;
           positions[i3 + 2] = y;
         }
 
