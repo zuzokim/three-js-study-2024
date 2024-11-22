@@ -26,7 +26,13 @@ function Page() {
       // Scene
       const scene = new THREE.Scene();
 
-      const parameters = { count: 100, size: 0.05, radius: 5, branches: 3 };
+      const parameters = {
+        count: 5000,
+        size: 0.03,
+        radius: 5,
+        branches: 3,
+        random: 0.5,
+      };
 
       const generateGalaxy = () => {
         /**
@@ -75,11 +81,17 @@ function Page() {
 
           const radius = Math.random() * parameters.radius;
 
-          const x = Math.cos(branchAngle + radius) * radius; //* Math.random(); // 넓이 조정하려면 radius만큼
-          const y = Math.sin(branchAngle + radius) * radius; //* Math.random();
+          const x =
+            Math.cos(branchAngle + radius) * radius +
+            //0 ~ 1 양수만 주면 회오리가 기울어 보임. -0.5 ~ 0.5로 맞춰서 중앙에서 좌우로 균일한 랜덤값을 줌
+            (Math.random() - 0.5) * radius * parameters.random;
+          const y =
+            Math.sin(branchAngle + radius) * radius +
+            (Math.random() - 0.5) * radius * parameters.random;
 
           positions[i3] = x;
-          positions[i3 + 1] = 0;
+          positions[i3 + 1] =
+            (Math.random() - 0.5) * radius * parameters.random * 0.5;
           positions[i3 + 2] = y;
         }
 
