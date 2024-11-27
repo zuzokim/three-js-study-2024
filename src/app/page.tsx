@@ -24,6 +24,7 @@ export default function Home() {
     "shadow",
     "haunted-house",
     "galaxy-generator",
+    "galaxy-generator-extend",
   ];
 
   return (

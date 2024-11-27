@@ -142,10 +142,80 @@ function Page() {
          * Points
          */
         const points = new THREE.Points(geometry, material);
+
+        // Rotate the points
+        points.rotation.x += 0.01;
+        points.rotation.y += 0.01;
+
         scene.add(points);
       };
 
       generateGalaxy();
+
+      const generateTornado = () => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = [];
+        const colors = [];
+        const color = new THREE.Color();
+
+        const numPoints = 10000;
+        const maxRadius = 5;
+        const height = 20;
+
+        for (let i = 0; i < numPoints; i++) {
+          const angle = i * 0.1;
+          const y = (i / numPoints) * height;
+          const radius = (y / height) * maxRadius; // Radius increases with height
+          const x = radius * Math.cos(angle);
+          const z = radius * Math.sin(angle);
+
+          positions.push(x, y, z);
+
+          // Color based on height
+          color.setHSL(y / height, 1.0, 0.5);
+          colors.push(color.r, color.g, color.b);
+        }
+
+        geometry.setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(positions, 3)
+        );
+        geometry.setAttribute(
+          "color",
+          new THREE.Float32BufferAttribute(colors, 3)
+        );
+
+        const material = new THREE.PointsMaterial({
+          size: 0.1,
+          sizeAttenuation: true,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending,
+          vertexColors: true,
+        });
+
+        /**
+         * Textures
+         */
+
+        const starTexture = new URL("./textures/star_08.png", import.meta.url);
+        const textureLoader = new THREE.TextureLoader();
+
+        const particleTexture = textureLoader.load(starTexture.pathname);
+
+        // ...
+
+        material.map = particleTexture;
+
+        const points = new THREE.Points(geometry, material);
+
+        // Rotate the points
+        points.rotation.x += 0.01;
+        points.rotation.y += 0.01;
+
+        scene.add(points);
+      };
+
+      generateTornado();
 
       /**
        * Sizes
@@ -160,14 +230,15 @@ function Page() {
        */
       // Base camera
       const camera = new THREE.PerspectiveCamera(
-        75,
+        90,
         sizes.width / sizes.height,
-        0.1,
+        1,
         100
       );
-      camera.position.x = -2;
-      camera.position.y = 3;
-      camera.position.z = 8;
+      // camera.position.x = -2;
+      // camera.position.y = 3;
+      // camera.position.z = 8;
+      camera.position.set(0, 100, 10);
       scene.add(camera);
 
       // Controls
@@ -193,6 +264,14 @@ function Page() {
         // Timer
         timer.update();
         const elapsedTime = timer.getElapsed();
+
+        // Move the camera upwards
+        camera.position.y += 0.05;
+
+        // Ensure the camera doesn't move beyond the top of the tornado
+        if (camera.position.y > 20) {
+          camera.position.y = 0;
+        }
 
         const axedHelper = new THREE.AxesHelper();
         scene.add(axedHelper);
@@ -220,7 +299,7 @@ function Page() {
   return (
     <div className={styles.page}>
       <HomeButton />
-      <PageTitle title="galaxy-generator" />
+      <PageTitle title="galaxy-generator-extend" />
       <canvas style={{ display: "block" }} ref={el}></canvas>
     </div>
   );
