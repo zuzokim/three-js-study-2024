@@ -25,6 +25,7 @@ export default function Home() {
     "haunted-house",
     "galaxy-generator",
     "galaxy-generator-extend",
+    "scroll-animation",
   ];
 
   return (
