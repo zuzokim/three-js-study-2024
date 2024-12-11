@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/three": "^0.161.2",
+    "cannon": "^0.6.2",
     "gasp": "^0.0.2",
     "gsap": "3.12",
     "lil-gui": "^0.19.2",
@@ -19,6 +19,8 @@
     "three": "^0.161.0"
   },
   "devDependencies": {
+    "@types/cannon": "^0.1.13",
+    "@types/three": "^0.161.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
