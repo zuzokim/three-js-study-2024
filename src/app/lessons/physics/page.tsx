@@ -15,7 +15,12 @@ function Page() {
   const el = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const gui = new GUI();
+    const debugObject = {};
+
     let requestId: number;
+
+    const objectsToUpdate: any[] = [];
 
     async function main() {
       if (!el.current) {
@@ -53,31 +58,52 @@ function Page() {
       const concreteMaterial = new CANNON.Material("concrete");
       const plasticMaterial = new CANNON.Material("plastic");
 
-      const concretePlasticContactMaterial = new CANNON.ContactMaterial(
-        concreteMaterial,
-        plasticMaterial,
+      // //두 물체가 만났을 때의 반발, 마찰 설정
+      // const concretePlasticContactMaterial = new CANNON.ContactMaterial(
+      //   concreteMaterial,
+      //   plasticMaterial,
+      //   {
+      //     friction: 0.1,
+      //     restitution: 0.7,
+      //   }
+      // );
+      // world.addContactMaterial(concretePlasticContactMaterial);
+
+      const defaultMaterial = new CANNON.Material("default");
+      const defaultContactMaterial = new CANNON.ContactMaterial(
+        defaultMaterial,
+        defaultMaterial,
         {
           friction: 0.1,
           restitution: 0.7,
         }
       );
-      world.addContactMaterial(concretePlasticContactMaterial);
+      world.addContactMaterial(defaultContactMaterial);
 
-      const sphereShape = new CANNON.Sphere(0.5);
+      world.defaultContactMaterial = defaultContactMaterial;
 
-      const sphereBody = new CANNON.Body({
-        mass: 1,
-        position: new CANNON.Vec3(0, 3, 0),
-        shape: sphereShape,
-        material: plasticMaterial
-      });
+      // const sphereShape = new CANNON.Sphere(0.5);
 
-      world.addBody(sphereBody);
+      // const sphereBody = new CANNON.Body({
+      //   mass: 1,
+      //   position: new CANNON.Vec3(0, 3, 0),
+      //   shape: sphereShape,
+      //   // material: plasticMaterial
+      //   // material: defaultMaterial,
+      // });
+
+      // // sphereBody.applyLocalForce(
+      // //   new CANNON.Vec3(100, 0, 0),
+      // //   new CANNON.Vec3(0, 0, 0)
+      // // );
+
+      // world.addBody(sphereBody);
 
       const floorShape = new CANNON.Plane();
       const floorBody = new CANNON.Body();
-      floorBody.material = concreteMaterial;
-      
+      // floorBody.material = concreteMaterial;
+      // floorBody.material = defaultMaterial;
+
       floorBody.mass = 0;
       floorBody.addShape(floorShape);
 
@@ -108,20 +134,142 @@ function Page() {
       ]);
 
       /**
+       * Sounds
+       */
+      const hitSound = new Audio(
+        new URL("./sounds/hit.mp3", import.meta.url).href
+      );
+
+      const playHitSound = () => {
+        hitSound.currentTime = 0;
+        hitSound.play();
+      };
+
+      /**
        * Test sphere
        */
-      const sphere = new THREE.Mesh(
-        new THREE.SphereGeometry(0.5, 32, 32),
-        new THREE.MeshStandardMaterial({
-          metalness: 0.3,
-          roughness: 0.4,
-          envMap: environmentMapTexture,
-          envMapIntensity: 0.5,
-        })
-      );
-      sphere.castShadow = true;
-      sphere.position.y = 0.5;
-      scene.add(sphere);
+      // const sphere = new THREE.Mesh(
+      //   new THREE.SphereGeometry(0.5, 32, 32),
+      //   new THREE.MeshStandardMaterial({
+      //     metalness: 0.3,
+      //     roughness: 0.4,
+      //     envMap: environmentMapTexture,
+      //     envMapIntensity: 0.5,
+      //   })
+      // );
+      // sphere.castShadow = true;
+      // sphere.position.y = 0.5;
+      // scene.add(sphere);
+
+      //지오메트리랑 머테리얼을 createSphere할 때 매번 할 필요없어서 밖으로 빼서 최적화
+      const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+      const sphereMaterial = new THREE.MeshStandardMaterial({
+        metalness: 0.3,
+        roughness: 0.4,
+        envMap: environmentMapTexture,
+        envMapIntensity: 0.5,
+      });
+
+      const createSphere = (radius: any, position: any) => {
+        // // Three.js mesh
+        // const mesh = new THREE.Mesh(
+        //   new THREE.SphereGeometry(radius, 20, 20),
+        //   new THREE.MeshStandardMaterial({
+        //     metalness: 0.3,
+        //     roughness: 0.4,
+        //     envMap: environmentMapTexture,
+        //     envMapIntensity: 0.5,
+        //   })
+        // );
+        const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        mesh.castShadow = true;
+        mesh.scale.set(radius, radius, radius);
+        mesh.position.copy(position);
+        scene.add(mesh);
+
+        // Cannon.js body
+        const shape = new CANNON.Sphere(radius);
+
+        const body = new CANNON.Body({
+          mass: 1,
+          position: new CANNON.Vec3(0, 3, 0),
+          shape: shape,
+          material: defaultMaterial,
+        });
+        body.position.copy(position);
+        world.addBody(body);
+
+        objectsToUpdate.push({
+          mesh,
+          body,
+        });
+      };
+
+      createSphere(0.5, { x: 0, y: 3, z: 0 });
+
+      //@ts-ignore
+      debugObject.createSphere = () => {
+        // createSphere(0.5, { x: 0, y: 3, z: 0 });
+        createSphere(Math.random() * 0.5, {
+          x: (Math.random() - 0.5) * 3,
+          y: 3,
+          z: (Math.random() - 0.5) * 3,
+        });
+      };
+
+      gui.add(debugObject, "createSphere");
+
+      // Create box
+      const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+      const boxMaterial = new THREE.MeshStandardMaterial({
+        metalness: 0.3,
+        roughness: 0.4,
+        envMap: environmentMapTexture,
+        envMapIntensity: 0.5,
+      });
+
+      //@ts-ignore
+      const createBox = (width, height, depth, position) => {
+        // Three.js mesh
+        const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+        mesh.scale.set(width, height, depth);
+        mesh.castShadow = true;
+        mesh.position.copy(position);
+        scene.add(mesh);
+
+        // Cannon.js body
+        const shape = new CANNON.Box(
+          new CANNON.Vec3(width * 0.5, height * 0.5, depth * 0.5)
+        );
+
+        const body = new CANNON.Body({
+          mass: 1,
+          position: new CANNON.Vec3(0, 3, 0),
+          shape: shape,
+          material: defaultMaterial,
+        });
+        body.position.copy(position);
+
+        body.addEventListener("collide", playHitSound);
+
+        world.addBody(body);
+
+        // Save in objects
+        objectsToUpdate.push({ mesh, body });
+      };
+
+      createBox(1, 1.5, 2, { x: 0, y: 3, z: 0 });
+
+      //@ts-ignore
+      debugObject.createBox = () => {
+        createBox(Math.random(), Math.random(), Math.random(), {
+          x: (Math.random() - 0.5) * 3,
+          y: 3,
+          z: (Math.random() - 0.5) * 3,
+        });
+      };
+
+      gui.add(debugObject, "createBox");
 
       /**
        * Floor
@@ -139,6 +287,10 @@ function Page() {
       floor.receiveShadow = true;
       floor.rotation.x = -Math.PI * 0.5;
       scene.add(floor);
+
+      //최적화
+      world.broadphase = new CANNON.SAPBroadphase(world);
+      world.allowSleep = true;
 
       /**
        * Sizes
@@ -204,6 +356,19 @@ function Page() {
         // Update controls
         controls.update();
 
+        for (const object of objectsToUpdate) {
+          object.mesh.position.copy(object.body.position);
+        }
+
+        //박스
+        for (const object of objectsToUpdate) {
+          object.mesh.position.copy(object.body.position);
+          object.mesh.quaternion.copy(object.body.quaternion);
+        }
+
+        // Update physics
+        // sphereBody.applyForce(new CANNON.Vec3(- 0.5, 0, 0), sphereBody.position);
+
         // Update physics 60프레임 , deltaTIme으로 지난 시간을 알려줌
         // (method) globalThis.CANNON.World.step(dy: number, timeSinceLastCalled?: number, maxSubSteps?: number): void
         world.step(1 / 60, deltaTime, 3);
@@ -213,7 +378,7 @@ function Page() {
         // sphere.position.y = sphereBody.position.y;
         // sphere.position.z = sphereBody.position.z;
         // or
-        sphere.position.copy(sphereBody.position);
+        // sphere.position.copy(sphereBody.position);
 
         // Render
         renderer.render(scene, camera);
