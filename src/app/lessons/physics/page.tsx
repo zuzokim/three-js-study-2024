@@ -140,9 +140,14 @@ function Page() {
         new URL("./sounds/hit.mp3", import.meta.url).href
       );
 
-      const playHitSound = () => {
-        hitSound.currentTime = 0;
-        hitSound.play();
+      const playHitSound = (collision: any) => {
+        const impactStrength = collision.contact.getImpactVelocityAlongNormal();
+
+        if (impactStrength > 1.5) {
+          hitSound.volume = Math.random();
+          hitSound.currentTime = 0;
+          hitSound.play();
+        }
       };
 
       /**
@@ -197,6 +202,9 @@ function Page() {
           material: defaultMaterial,
         });
         body.position.copy(position);
+
+        body.addEventListener("collide", playHitSound);
+
         world.addBody(body);
 
         objectsToUpdate.push({
@@ -270,6 +278,23 @@ function Page() {
       };
 
       gui.add(debugObject, "createBox");
+
+
+      //reset
+      //@ts-ignore
+      debugObject.reset = () => {
+        for (const object of objectsToUpdate) {
+          // Remove body
+          object.body.removeEventListener("collide", playHitSound);
+          //@ts-ignore
+          world.removeBody(object.body);
+
+          // Remove mesh
+          scene.remove(object.mesh);
+        }
+      };
+
+      gui.add(debugObject, "reset");
 
       /**
        * Floor
