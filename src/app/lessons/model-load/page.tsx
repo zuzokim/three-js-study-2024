@@ -34,13 +34,19 @@ function Page() {
        */
       const gltfLoader = new GLTFLoader();
 
+      let mixer: any = null;
       gltfLoader.load(
-        "/static/models/Duck/glTF-Draco/Duck.gltf",
+        "/static/models/Fox/glTF/Fox.gltf",
         (gltf) => {
           console.log("success");
           console.log(gltf);
 
-          scene.add(gltf.scene.children[0]);
+          mixer = new THREE.AnimationMixer(gltf.scene);
+          const action = mixer.clipAction(gltf.animations[2]);
+          action.play();
+
+          gltf.scene.scale.set(0.025, 0.025, 0.025);
+          scene.add(gltf.scene);
         },
         (progress) => {
           console.log("progress");
@@ -53,12 +59,12 @@ function Page() {
       );
 
       /**draco loader */
-      const dracoLoader = new DRACOLoader();
+      // const dracoLoader = new DRACOLoader();
 
-      dracoLoader.setDecoderPath("/draco/");
-      //cdn 써도 됨
-      //dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-      gltfLoader.setDRACOLoader(dracoLoader);
+      // dracoLoader.setDecoderPath("/draco/");
+      // //cdn 써도 됨
+      // //dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+      // gltfLoader.setDRACOLoader(dracoLoader);
 
       /**
        * Floor
@@ -153,6 +159,11 @@ function Page() {
         const elapsedTime = clock.getElapsedTime();
         const deltaTime = elapsedTime - oldElapsedTime;
         oldElapsedTime = elapsedTime;
+
+        //animation
+        if (mixer) {
+          mixer.update(deltaTime * 2);
+        }
 
         // Update controls
         controls.update();
