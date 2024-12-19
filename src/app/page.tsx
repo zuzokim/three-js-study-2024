@@ -28,6 +28,7 @@ export default function Home() {
     "scroll-animation",
     "physics",
     "model-load",
+    "model-load-animation"
   ];
 
   return (

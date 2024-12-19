@@ -1,0 +1,11 @@
+Model Information:
+* title:	AI Made Banana Cat (Gangnam Style)
+* source:	https://sketchfab.com/3d-models/ai-made-banana-cat-gangnam-style-d132bfbc6d29436fb66a361b9151cfc7
+* author:	Aero 3D (https://sketchfab.com/Aero_3D)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "AI Made Banana Cat (Gangnam Style)" (https://sketchfab.com/3d-models/ai-made-banana-cat-gangnam-style-d132bfbc6d29436fb66a361b9151cfc7) by Aero 3D (https://sketchfab.com/Aero_3D) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
