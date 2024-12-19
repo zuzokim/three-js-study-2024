@@ -27,6 +27,7 @@ export default function Home() {
     "galaxy-generator-extend",
     "scroll-animation",
     "physics",
+    "model-load",
   ];
 
   return (
