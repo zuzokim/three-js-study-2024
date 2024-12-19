@@ -7,7 +7,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import styles from "../../page.module.css";
 import HomeButton from "@/app/components/HomeButton";
 import PageTitle from "@/app/components/PageTitle";
-
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
 
@@ -27,6 +28,38 @@ function Page() {
       const canvas = el.current;
       // Scene
       const scene = new THREE.Scene();
+
+      /**
+       * Models
+       */
+      const gltfLoader = new GLTFLoader();
+
+      gltfLoader.load(
+        "/static/models/Duck/glTF-Draco/Duck.gltf",
+        (gltf) => {
+          console.log("success");
+          console.log(gltf);
+
+          scene.add(gltf.scene.children[0]);
+        },
+        (progress) => {
+          console.log("progress");
+          console.log(progress);
+        },
+        (error) => {
+          console.log("error");
+          console.log(error);
+        }
+      );
+
+      /**draco loader */
+      const dracoLoader = new DRACOLoader();
+
+      dracoLoader.setDecoderPath("/draco/");
+      //cdn 써도 됨
+      //dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+      gltfLoader.setDRACOLoader(dracoLoader);
+
       /**
        * Floor
        */
