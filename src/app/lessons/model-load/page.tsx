@@ -36,17 +36,18 @@ function Page() {
 
       let mixer: any = null;
       gltfLoader.load(
-        "/static/models/Fox/glTF/Fox.gltf",
+        "/static/models/borbemporium_cat/scene.gltf",
         (gltf) => {
           console.log("success");
           console.log(gltf);
 
-          mixer = new THREE.AnimationMixer(gltf.scene);
-          const action = mixer.clipAction(gltf.animations[2]);
-          action.play();
+          // mixer = new THREE.AnimationMixer(gltf.scene);
+          // const action = mixer.clipAction(gltf.animations[2]);
+          // action.play();
 
-          gltf.scene.scale.set(0.025, 0.025, 0.025);
-          scene.add(gltf.scene);
+          gltf.scene.children[0].scale.set(40, 40, 40);
+          scene.add(gltf.scene.children[0]);
+          
         },
         (progress) => {
           console.log("progress");
@@ -72,7 +73,7 @@ function Page() {
       const floor = new THREE.Mesh(
         new THREE.PlaneGeometry(10, 10),
         new THREE.MeshStandardMaterial({
-          color: "#444444",
+          color: "#2817c3",
           metalness: 0,
           roughness: 0.5,
         })
@@ -97,6 +98,11 @@ function Page() {
       directionalLight.shadow.camera.bottom = -7;
       directionalLight.position.set(5, 5, 5);
       scene.add(directionalLight);
+
+      // Point light
+      const pointLight = new THREE.PointLight(0x22ff00, 20, 60, 2);
+      pointLight.position.set(-1, 0, 1);
+      scene.add(pointLight);
 
       /**
        * Sizes
@@ -161,9 +167,11 @@ function Page() {
         oldElapsedTime = elapsedTime;
 
         //animation
-        if (mixer) {
-          mixer.update(deltaTime * 2);
-        }
+        // if (mixer) {
+        //   mixer.update(deltaTime * 2);
+        // }
+
+
 
         // Update controls
         controls.update();
