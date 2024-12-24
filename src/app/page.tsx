@@ -28,7 +28,8 @@ export default function Home() {
     "scroll-animation",
     "physics",
     "model-load",
-    "model-load-animation"
+    "model-load-animation",
+    "raycaster-and-mouse-events",
   ];
 
   return (

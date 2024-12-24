@@ -1,0 +1,9 @@
+{
+  "files.autoSave": "afterDelay",
+  "cursor.cmdk.useThemedDiffBackground": true,
+  "workbench.colorTheme": "Monokai Dimmed",
+  "workbench.preferredDarkColorTheme": "Monokai Dimmed",
+  "workbench.preferredHighContrastColorTheme": "Monokai Dimmed",
+  "workbench.preferredHighContrastLightColorTheme": "Monokai Dimmed",
+  "material-icon-theme.activeIconPack": "react"
+}
