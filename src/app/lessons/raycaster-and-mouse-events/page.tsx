@@ -34,7 +34,7 @@ function Page() {
        */
       const gltfLoader = new GLTFLoader();
 
-      let model = null;
+      let model: any = null;
       gltfLoader.load(
         "/static/models/borbemporium_cat/scene.gltf",
         (gltf) => {
