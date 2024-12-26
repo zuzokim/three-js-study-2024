@@ -8,6 +8,8 @@ import styles from "../../page.module.css";
 import HomeButton from "@/app/components/HomeButton";
 import PageTitle from "@/app/components/PageTitle";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import { GroundedSkybox } from "three/addons/objects/GroundedSkybox.js";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);
@@ -33,21 +35,49 @@ function Page() {
       /**
        * Textures
        */
-      const textureLoader = new THREE.TextureLoader();
 
-      const cubeTextureLoader = new THREE.CubeTextureLoader();
+      // const cubeTextureLoader = new THREE.CubeTextureLoader();
 
-      const environmentMapTexture = cubeTextureLoader.load([
-        new URL("./textures/environmentMaps/2/px.png", import.meta.url).href,
-        new URL("./textures/environmentMaps/2/nx.png", import.meta.url).href,
-        new URL("./textures/environmentMaps/2/py.png", import.meta.url).href,
-        new URL("./textures/environmentMaps/2/ny.png", import.meta.url).href,
-        new URL("./textures/environmentMaps/2/pz.png", import.meta.url).href,
-        new URL("./textures/environmentMaps/2/nz.png", import.meta.url).href,
-      ]);
+      // const environmentMapTexture = cubeTextureLoader.load([
+      //   new URL("./textures/environmentMaps/2/px.png", import.meta.url).href,
+      //   new URL("./textures/environmentMaps/2/nx.png", import.meta.url).href,
+      //   new URL("./textures/environmentMaps/2/py.png", import.meta.url).href,
+      //   new URL("./textures/environmentMaps/2/ny.png", import.meta.url).href,
+      //   new URL("./textures/environmentMaps/2/pz.png", import.meta.url).href,
+      //   new URL("./textures/environmentMaps/2/nz.png", import.meta.url).href,
+      // ]);
 
-      scene.background = environmentMapTexture;
-      scene.environment = environmentMapTexture;
+      // scene.background = environmentMapTexture;
+      // scene.environment = environmentMapTexture;
+
+      //hdri
+      /**
+       * Loaders
+       */
+      // ...
+      const rgbeLoader = new RGBELoader();
+
+      // HDR (RGBE) equirectangular
+      rgbeLoader.load(
+        new URL(
+          "./textures/environmentMaps/M3_Fantasy_hdri-hdr_a_huge_chocolate_factory_426147493_12736762.hdr",
+          import.meta.url
+        ).href,
+        (environmentMap) => {
+          // console.log(environmentMap);
+
+          environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+
+          // scene.background = environmentMap;
+          scene.environment = environmentMap;
+
+          // Skybox
+          const skybox = new GroundedSkybox(environmentMap, 15, 70);
+          skybox.position.y = 15;
+          // skybox.material.wireframe = true;//바닥이 평평하게
+          scene.add(skybox);
+        }
+      );
 
       /**
        * Environment map
@@ -58,9 +88,9 @@ function Page() {
       scene.backgroundIntensity = 1;
 
       //@ts-ignore
-      scene.backgroundRotation.x = 1;
+      // scene.backgroundRotation.x = 1;
       //@ts-ignore
-      scene.environmentRotation.x = 2;
+      // scene.environmentRotation.x = 2;
 
       gui.add(scene, "environmentIntensity").min(0).max(10).step(0.001);
       gui.add(scene, "backgroundBlurriness").min(0).max(1).step(0.001);
