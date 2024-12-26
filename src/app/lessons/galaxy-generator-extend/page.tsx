@@ -7,8 +7,6 @@ import styles from "../../page.module.css";
 import HomeButton from "@/app/components/HomeButton";
 import PageTitle from "@/app/components/PageTitle";
 import { Timer } from "three/addons/misc/Timer.js";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { color } from "three/examples/jsm/nodes/Nodes.js";
 
 function Page() {
   const el = useRef<HTMLCanvasElement>(null);

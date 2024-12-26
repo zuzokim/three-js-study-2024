@@ -16,11 +16,11 @@
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "three": "^0.161.0"
+    "three": "^0.171.0"
   },
   "devDependencies": {
     "@types/cannon": "^0.1.13",
-    "@types/three": "^0.161.2",
+    "@types/three": "^0.171.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

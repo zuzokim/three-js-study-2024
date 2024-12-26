@@ -30,6 +30,7 @@ export default function Home() {
     "model-load",
     "model-load-animation",
     "raycaster-and-mouse-events",
+    "environment-map",
   ];
 
   return (
