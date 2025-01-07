@@ -32,6 +32,7 @@ export default function Home() {
     "raycaster-and-mouse-events",
     "environment-map",
     "environment-map-realtime",
+    "realistic-render",
   ];
 
   return (
