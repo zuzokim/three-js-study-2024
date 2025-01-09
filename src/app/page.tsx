@@ -33,6 +33,7 @@ export default function Home() {
     "environment-map",
     "environment-map-realtime",
     "realistic-render",
+    "first-three-fiber",
   ];
 
   return (
