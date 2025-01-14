@@ -22,6 +22,10 @@ function Render() {
     //delta is the time between the last frame and the current frame
     cubeRef.current.rotation.y += delta;
     groupRef.current.rotation.y += delta;
+
+    const angle = state.clock.elapsedTime;
+    state.camera.position.x = Math.sin(angle);
+    state.camera.position.z = Math.cos(angle);
   });
 
   return (

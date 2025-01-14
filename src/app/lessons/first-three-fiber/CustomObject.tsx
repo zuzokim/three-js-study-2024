@@ -1,17 +1,31 @@
+import { useEffect, useMemo, useRef } from "react";
+import * as THREE from "three";
+// import { DoubleSide } from "three";
+
 function CustomObject() {
   const verticesCount = 10 * 3;
-  const positions = new Float32Array(verticesCount * 3);
 
-  for (let i = 0; i < verticesCount; i++) {
-    positions[i * 3] = Math.random() * 10 - 5;
-    positions[i * 3 + 1] = Math.random() * 10 - 5;
-    positions[i * 3 + 2] = Math.random() * 10 - 5;
-  }
+  const positions = useMemo(() => {
+    const positions = new Float32Array(verticesCount * 3);
+
+    for (let i = 0; i < verticesCount * 3; i++)
+      positions[i] = (Math.random() - 0.5) * 3;
+
+    return positions;
+  }, [verticesCount]);
+
+  const geometryRef = useRef<THREE.BufferGeometry>(null);
+
+  useEffect(() => {
+    if (geometryRef.current) {
+      geometryRef.current.computeVertexNormals();
+    }
+  }, [positions]);
 
   return (
     <>
       <mesh>
-        <bufferGeometry>
+        <bufferGeometry ref={geometryRef}>
           <bufferAttribute
             attach="attributes-position"
             count={verticesCount}
@@ -19,7 +33,7 @@ function CustomObject() {
             array={positions}
           />
         </bufferGeometry>
-        <meshBasicMaterial color="red" />
+        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
       </mesh>
     </>
   );
