@@ -34,6 +34,7 @@ export default function Home() {
     "environment-map-realtime",
     "realistic-render",
     "first-three-fiber",
+    "drei",
   ];
 
   return (

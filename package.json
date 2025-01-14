@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.120.8",
     "@react-three/fiber": "^8.17.10",
     "cannon": "^0.6.2",
     "gasp": "^0.0.2",
