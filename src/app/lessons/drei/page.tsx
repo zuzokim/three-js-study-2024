@@ -8,6 +8,7 @@ import "./style.css";
 import HomeButton from "@/app/components/HomeButton";
 import PageTitle from "@/app/components/PageTitle";
 import { Canvas } from "@react-three/fiber";
+import dynamic from "next/dynamic";
 import Render from "./Render";
 
 function Page() {
@@ -25,7 +26,9 @@ function Page() {
       <PageTitle title="drei" />
       {/* @ts-ignore */}
       <Canvas orthographic camera={cameraSettings}>
-        <Render />
+        <>
+          <Render />
+        </>
       </Canvas>
     </div>
   );
