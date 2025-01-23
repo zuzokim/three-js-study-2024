@@ -35,6 +35,7 @@ export default function Home() {
     "realistic-render",
     "first-three-fiber",
     "drei",
+    "enviroment-and-staging",
   ];
 
   return (
