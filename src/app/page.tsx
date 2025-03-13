@@ -36,6 +36,7 @@ export default function Home() {
     "first-three-fiber",
     "drei",
     "enviroment-and-staging",
+    "load-a-model-r3f",
   ];
 
   return (
