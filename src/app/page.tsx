@@ -37,6 +37,7 @@ export default function Home() {
     "drei",
     "enviroment-and-staging",
     "load-a-model-r3f",
+    "mouse-event"
   ];
 
   return (

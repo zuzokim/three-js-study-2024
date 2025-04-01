@@ -20,7 +20,8 @@
     "r3f-perf": "^7.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "three": "^0.171.0"
+    "three": "^0.171.0",
+    "three-mesh-bvh": "^0.9.0"
   },
   "devDependencies": {
     "@types/cannon": "^0.1.13",
