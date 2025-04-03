@@ -12,7 +12,7 @@ export const Experience = () => {
   const cube = useRef(null);
   const cubeGeo = useRef(null);
   //@ts-ignore
-  useHelper(cubeGeo, MeshBVHHelper, "blue");
+  // useHelper(cubeGeo, MeshBVHHelper, "blue");
 
   const hamburger = useGLTF("/static/hamburger.glb");
 
@@ -25,6 +25,7 @@ export const Experience = () => {
   const eventHandler = () => {
     console.log("the event occured");
     if (!cube.current) return;
+    //@ts-ignore
     cube.current.material.color.set(`hsl(${Math.random() * 360}, 100%, 75%)`);
   };
 
@@ -71,7 +72,7 @@ export const Experience = () => {
           object={hamburger.scene}
           scale={0.25}
           position-y={0.5}
-          onClick={(event) => {
+          onClick={(event: any) => {
             console.log("click");
             event.stopPropagation(); //패티, 치즈, 상추, 소스, 빵 다 호출됨
           }}
