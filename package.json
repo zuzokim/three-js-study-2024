@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-three/drei": "^9.120.8",
     "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^2.16.5",
     "cannon": "^0.6.2",
     "gasp": "^0.0.2",
     "gsap": "3.12",
