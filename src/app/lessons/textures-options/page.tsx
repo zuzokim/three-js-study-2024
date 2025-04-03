@@ -202,6 +202,7 @@ function Page() {
 
     tick();
     return () => {
+      //@ts-ignore
       cancelAnimationFrame(requestId);
     };
   });

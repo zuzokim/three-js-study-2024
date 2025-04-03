@@ -227,6 +227,7 @@ function Page() {
     tick();
 
     return () => {
+      //@ts-ignore
       cancelAnimationFrame(requestId);
       window.removeEventListener("mousemove", onMouseMove);
     };

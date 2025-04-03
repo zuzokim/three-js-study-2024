@@ -213,6 +213,7 @@ function Page() {
     main();
 
     return () => {
+      //@ts-ignore
       cancelAnimationFrame(requestId);
     };
   });
